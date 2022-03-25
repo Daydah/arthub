@@ -104,13 +104,13 @@ if(!empty($_GET["action"])) {
 switch($_GET["action"]) {
 	case "add":
 		if(!empty($_POST["quantity"])) {
-			
+
       //search the array for the sent code{}
       $pbc =searchforcode($_GET["code"],$prods);//print_r($pbc);
       $productByCode = $prods; //print_r($productByCode[$pbc]);
-      
+
 			$itemArray = array($productByCode[$pbc]["code"]=>array('name'=>$productByCode[$pbc]["name"], 'code'=>$productByCode[$pbc]["code"], 'quantity'=>$_POST["quantity"], 'price'=>$productByCode[$pbc]["price"], 'image'=>$productByCode[$pbc]["image"], 'creator'=>$productByCode[$pbc]["creator"]));
-			
+
 			if(!empty($_SESSION["cart_item"])) {
 				if(in_array($productByCode[$pbc]["code"],array_keys($_SESSION["cart_item"]))) {
 					foreach($_SESSION["cart_item"] as $k => $v) {
@@ -133,7 +133,7 @@ switch($_GET["action"]) {
 		if(!empty($_SESSION["cart_item"])) {
 			foreach($_SESSION["cart_item"] as $k => $v) {
 					if($_GET["code"] == $k)
-						unset($_SESSION["cart_item"][$k]);				
+						unset($_SESSION["cart_item"][$k]);
 					if(empty($_SESSION["cart_item"]))
 						unset($_SESSION["cart_item"]);
 			}
@@ -141,7 +141,7 @@ switch($_GET["action"]) {
 	break;
 	case "empty":
 		unset($_SESSION["cart_item"]);
-	break;	
+	break;
 }
 }
 ?>
@@ -155,12 +155,12 @@ switch($_GET["action"]) {
 		<div class="txt-heading">Shopping Cart</div>
 
 <a id="btnEmpty" href="index.php?action=empty">Empty Cart</a> &nbsp;
-<a id="btnEmpty" href="checkout.php">Check Out</a> &nbsp;
+
 <?php
 if(isset($_SESSION["cart_item"])){
     $total_quantity = 0;
     $total_price = 0;
-?>	
+?>
 <table class="tbl-cart" cellpadding="10" cellspacing="1">
 <tbody>
 <tr>
@@ -171,8 +171,8 @@ if(isset($_SESSION["cart_item"])){
 <th style="text-align:right;" width="10%">Unit Price</th>
 <th style="text-align:right;" width="10%">Price</th>
 <th style="text-align:center;" width="5%">Remove</th>
-</tr>	
-<?php		
+</tr>
+<?php
     foreach ($_SESSION["cart_item"] as $item){
         $item_price = $item["quantity"]*$item["price"];
 		?>
@@ -213,28 +213,17 @@ if(isset($_SESSION["cart_item"])){
   <td></td>
 </tr>
 </tbody>
-</table>	
-<?php
-  //collect customer details to check out
-  
+</table>
+<?php /* add the other cart elements to the session */
+  $_SESSION["fintotal"] = $fintotal;
+  //$_SESSION[""]
   ?>
-  <div><br/><br/>
-    <div  class="txt-heading">Check Out</div><br/>
-    <form method="post" action=""><br/>
-      <label for="client_email">Email: </label>
-      <input type="email" name="client_email"/><br/><br/>
-      <label for="">Address:</label>
-      
-      <textarea id="client_address" name="client_address" rows="4" cols="50">
-</textarea><br/><br/>
-      <input type="submit" value="Submit" />
-    </form>
-  </div>
+<a id="btnEmpty" href="checkout.php">Check Out</a> &nbsp;
   <?php
 } else {
 ?>
 <div class="no-records">Your Cart is Empty</div>
-<?php 
+<?php
 }
 ?>
 </div>
@@ -243,7 +232,7 @@ if(isset($_SESSION["cart_item"])){
 	<div class="txt-heading">Products</div>
 	<?php
 	$product_array = $prods;
-	if (!empty($product_array)) { 
+	if (!empty($product_array)) {
 		foreach($product_array as $key=>$value){
 	?>
 		<div class="product-item">
