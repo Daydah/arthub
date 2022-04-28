@@ -3,11 +3,11 @@ session_start();
 
   //customer details to check out
 if(!empty($_POST["client_email"])) { $email = $_POST["client_email"];
-  $return_url = "checkout.php";
+  $return_url = "index.php?e=".$email;
   $package_price = $_SESSION["fintotal"];
   $public_key = 'pk_test_a4640295cdec13beeeb8b4b200cdb9f6e2280746';
-
-  $tranx_id = 'arthub002';
+  $tran2  = substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyz"), 0, 4);
+  $tranx_id = 'arthub'.$tran2;
   //build the html and javascript form to send out
   	$tosend = '<p>Your order is being processed. Please wait...</p>
 	<form id="paystack-pay-form" action="' . $return_url . '" method="post">
